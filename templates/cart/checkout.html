@@ -1,0 +1,253 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="hero-wrap hero-bread" style="background-image: url({% static 'images/bg_1.jpg' %});">
+      <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+          <div class="col-md-9 ftco-animate text-center">
+          	<p class="breadcrumbs"><span class="mr-2"><a href="{% url 'home' %}">Home</a></span> <span>Checkout</span></p>
+            <h1 class="mb-0 bread">Checkout</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section class="ftco-section">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-xl-7 ftco-animate">
+						<form action="#" class="billing-form">
+							<h3 class="mb-4 billing-heading">Billing Details</h3>
+	          	<div class="row align-items-end">
+	          		<div class="col-md-6">
+	                <div class="form-group">
+	                	<label for="firstname">Firt Name</label>
+	                  <input type="text" class="form-control" placeholder="" name="firstname" id="firstname">
+	                </div>
+	              </div>
+	              <div class="col-md-6">
+	                <div class="form-group">
+	                	<label for="lastname">Last Name</label>
+	                  <input type="text" class="form-control" placeholder="" name="lastname" id="lastname">
+	                </div>
+                </div>
+                <div class="w-100"></div>
+		            <div class="col-md-12">
+		            	<div class="form-group">
+		            		<label for="country">State </label>
+		            		<div class="select-wrap">
+		                  <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+		                  <select name="state" id="state" class="form-control">
+		                  	<option value="1">Gujarat</option>
+		                    <option value="2">MP</option>
+		                    <option value="3">MH</option>
+		                    <option value="4">UP</option>
+		                  </select>
+		                </div>
+		            	</div>
+		            </div>
+		            <div class="w-100"></div>
+		            <div class="col-md-6">
+		            	<div class="form-group">
+	                	<label for="streetaddress">Street Address</label>
+	                  <input type="text" class="form-control" placeholder="House number and street name" name="streetaddress" id="streetaddress">
+	                </div>
+		            </div>
+		            <div class="col-md-6">
+		            	<div class="form-group">
+	                  <input type="text" class="form-control" placeholder="Appartment, suite, unit etc: (optional)" name="streetaddress1" id="streetaddress1">
+	                </div>
+		            </div>
+		            <div class="w-100"></div>
+		            <div class="col-md-6">
+		            	<div class="form-group">
+	                	<label for="towncity">Town / City</label>
+	                  <input type="text" class="form-control" placeholder="" name="towncity" id="towncity">
+	                </div>
+		            </div>
+		            <div class="col-md-6">
+		            	<div class="form-group">
+		            		<label for="postcodezip">Postcode / ZIP *</label>
+	                  <input type="text" class="form-control" placeholder="" name="postcodezip" id="postcodezip">
+	                </div>
+		            </div>
+		            <div class="w-100"></div>
+		            <div class="col-md-6">
+	                <div class="form-group">
+	                	<label for="phone">Phone</label>
+	                  <input type="text" class="form-control" placeholder="" name="phone" id="phone">
+	                </div>
+	              </div>
+	              <div class="col-md-6">
+	                <div class="form-group">
+	                	<label for="emailaddress">Email Address</label>
+	                  <input type="text" class="form-control" placeholder="" name="emailaddress" id="emailaddress">
+	                </div>
+					
+                </div>
+				{% comment %} add password {% endcomment %}
+                {% if not user.is_authenticated %}
+				<div class="w-100">
+					<div class="col-md-12">
+						<div class="form-group">
+							<label for="password">Password</label>
+							<input type="password" class="form-control" placeholder="" name="password" id="password">
+						</div>
+
+				</div>
+				{% endif %}
+				
+				<div class="w-100"></div>
+                <div class="col-md-12">
+                	<div class="form-group mt-4">
+										<div class="radio">
+										  {% comment %} <label class="mr-3"><input type="radio" name="optradio"> Create an Account? </label>
+										  <label><input type="radio" name="optradio"> Ship to different address</label> {% endcomment %}
+										</div>
+									</div>
+                </div>
+	            </div>
+	          </form><!-- END -->
+					</div>
+					<div class="col-xl-5">
+	          <div class="row mt-5 pt-3">
+	          	<div class="col-md-12 d-flex mb-5">
+	          		<div class="cart-detail cart-total p-3 p-md-4">
+	          			<h3 class="billing-heading mb-4">Cart Total</h3>
+	          			<p class="d-flex">
+		    						<span>Subtotal</span>
+		    						<span>₹{{total_price}}</span>
+		    					</p>
+		    					<p class="d-flex">
+		    						<span>Delivery</span>
+		    						<span>₹0.00</span>
+		    					</p>
+		    					<p class="d-flex">
+		    						<span>Discount</span>
+		    						<span>₹0.00</span>
+		    					</p>
+		    					<hr>
+		    					<p class="d-flex total-price">
+		    						<span>Total</span>
+		    						<span>₹{{total_price}}</span>
+		    					</p>
+								</div>
+	          	</div>
+	          	<div class="col-md-12">
+	          
+				  <p> 
+					{% comment %} <button class="btn" id="pay-btn">Place Order</button>  {% endcomment %}
+				   {% comment %} <a  class="btn btn-primary py-3 px-4" style='color : black'> Place an order</a>  {% endcomment %}
+				   <button class="btn btn-primary py-3 px-4" id="pay-btn" onclick="makePayment()">Place Order</button>
+			   </p> 
+	          </div>
+          </div> <!-- .col-md-8 -->
+        </div>
+      </div>
+    </section> <!-- .section -->
+
+
+	<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+	<script>
+		//{% comment %} if user is authenticated email and first name should auto field when page is render {% endcomment %}
+		document.getElementById('firstname').value = "{{ user.first_name }}";
+		document.getElementById('emailaddress').value = "{{ user.username }}";
+		console.log("{{ user.first_name }}")
+		console.log("{{ user.username }}")
+		if("{{ user.username }}" != ""){
+			
+			document.getElementById('emailaddress').readOnly = true;
+		}
+		function makePayment() {
+			console.log({
+				csrfmiddlewaretoken: '{{ csrf_token }}',
+				'amount': {{total_price}},
+				'firstname': $('#firstname').val(),
+				'lastname': $('#lastname').val(),
+				'state': $('#state').val(),
+				'streetaddress': $('#streetaddress').val(),
+				'streetaddress1': $('#streetaddress1').val(),
+				'towncity': $('#towncity').val(),
+				'postcodezip': $('#postcodezip').val(),
+				'phone': $('#phone').val(),
+				'emailaddress': $('#emailaddress').val(),
+				'password': $('#password').val(),
+
+				
+				
+			})
+			
+					$.ajax({
+						url: "{% url 'payment' %}",
+						type: "POST",
+						data: {
+							csrfmiddlewaretoken: '{{ csrf_token }}',
+							'amount': {{total_price}},
+							'firstname': $('#firstname').val(),
+							'lastname': $('#lastname').val(),
+							'state': $('#state').val(),
+							'streetaddress': $('#streetaddress').val(),
+							'towncity': $('#towncity').val(),
+							'postcodezip': $('#postcodezip').val(),
+							'phone': $('#phone').val(),
+							'emailaddress': $('#emailaddress').val(),
+							'streetaddress1': $('#streetaddress1').val(),
+							'password': $('#password').val(),
+
+							
+						},
+						success: function(data){
+							console.log(data)
+							var options = {
+								// Enter the Key ID generated from the Dashboard
+								key: "rzp_test_1DP5mmOlF5G5ag",
+								 
+								// Amount is in currency subunits.
+								// Default currency is INR. Hence, 
+								// 50000 refers to 50000 paise
+								amount: data.total_price, 
+								currency: data.currency,
+								 
+								// Your/store name.
+								name: "Dj Razorpay", 
+								 
+								// Pass the `id` obtained in the response of Step 1
+								//order_id:  data.id, 
+								// if the payment is successful the callback function will be called else it will throw an error
+								handler: function (response){
+								  alert(response.razorpay_payment_id);
+								  alert(response.razorpay_order_id);
+								  alert(response.razorpay_signature)
+								},
+								// prefilling the customer email
+								prefill: {
+								  email: "{{ user.email }}",
+								  contact: "{{ user.profile.phone }}"
+								},
+								notes: {
+								  address: "Razorpay Corporate Office"
+								},
+								theme: {
+								  color: "#F37254"
+								}
+					  
+								
+								
+							  };
+							var rzp1 = new Razorpay(options);
+							rzp1.open();
+							e.preventDefault();
+
+							
+							
+
+						}
+
+					});
+				}
+	</script>
+					
+			
+
+{% endblock %}

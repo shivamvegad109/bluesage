@@ -1,0 +1,84 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div class="hero-wrap hero-bread" style="background-image: url({% static 'images/bg_1.jpg' %});">
+      <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+          <div class="col-md-9 ftco-animate text-center">
+          	<p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span>Wishlist</span></p>
+            <h1 class="mb-0 bread">My Wishlist</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section class="ftco-section ftco-cart">
+			<div class="container">
+				<div class="row">
+    			<div class="col-md-12 ftco-animate">
+    				<div class="cart-list">
+	    				<table class="table">
+						    <thead class="thead-primary">
+						      <tr class="text-center">
+						        <th>&nbsp;</th>
+						        <th>Product List</th>
+						        <th>&nbsp;</th>
+						        <th>Price</th>
+						        {% comment %} <th>Quantity</th> {% endcomment %}
+						        {% comment %} <th>Total</th> {% endcomment %}
+						      </tr>
+						    </thead>
+						    <tbody>
+
+								{% for product in products %}
+							<tr class="text-center">
+							<td class="product-remove">
+								<a href="javascript:void(0)" onclick="removeWithlistItem({{ product.id }})"><span class="ion-ios-close"></span></a>
+							</td>
+							
+							<td class="image-prod"><div class="img" style="background-image:url({{ product.photo.url }});"></div></td>
+							
+							<td class="product-name">
+								<h3>{{ product.name }}</h3>
+								<p>{{ item.product.description }}</p>
+							</td>
+							
+							<td class="price">{{ product.price }}</td>
+
+							 {% endfor %} 
+												
+							 
+							 {% if not products %}
+							 								<td colspan="5" class="text-center">No products in wishlist</td>
+																{% endif %}
+													
+						    </tbody>
+						  </table>
+					  </div>
+    			</div>
+    		</div>
+			</div>
+		</section>
+
+		<script>
+
+			function removeWithlistItem(productId) {
+				$.ajax({
+					url: "{% url 'remove-wishlist-item' %}",
+					type: "POST",
+					data: {
+						'id': productId,
+						'csrfmiddlewaretoken': '{{ csrf_token }}'
+					},
+					success: function (response) {
+						location.reload();
+					},
+					error: function (response) {
+						console.log(response);
+					}
+				});
+			}
+		</script>
+{% endblock %}

@@ -1,0 +1,130 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="hero-wrap hero-bread" style="background-image: url({% static 'images/bg_1.jpg' %});">
+      <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+          <div class="col-md-9 ftco-animate text-center">
+          	<p class="breadcrumbs"><span class="mr-2"><a href="{% url 'home' %}">Home</a></span> </p>
+            <h1 class="mb-0 bread">Products</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section class="ftco-section">
+    	<div class="container">
+    		<div class="row justify-content-center">
+    			<div class="col-md-10 mb-5 text-center">
+    				<ul class="product-category">
+    					{% comment %} <li><a href="#" class="active">All</a></li> {% endcomment %}
+              {% comment %} {% for ctg in category %} {% endcomment %}
+    					<li><a href="#">{{ category.name }}</a></li>
+              {% comment %} {% endfor %} {% endcomment %}
+    				</ul>
+    			</div>
+    		</div>
+    		<div class="row">
+          {% if products %}
+          {% for product in products %}
+    			<div class="col-md-6 col-lg-3 ftco-animate">
+    				<div class="product">
+    					<a href="{% url 'product-details' product.id %}" class="img-prod"><img class="img-fluid" src="{{ product.photo.url }}" alt="Colorlib Template">
+    						<div class="overlay"></div>
+    					</a>
+    					<div class="text py-3 pb-4 px-3 text-center">
+    						<h3><a href="{% url 'product-details' product.id %}">{{ product.name }}</a></h3>
+    						<div class="d-flex">
+    							<div class="pricing">
+		    						<p class="price"><span>₹{{ product.price }}.00</span></p>
+		    					</div>
+	    					</div>
+    						<div class="bottom-area d-flex px-3">
+	    						<div class="m-auto d-flex">
+	    							<!-- <a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
+	    								<span><i class="ion-ios-menu"></i></span>
+	    							</a> -->
+	    							<a href="{% url 'product-details' product.id %}" class="buy-now d-flex justify-content-center align-items-center mx-1">
+	    								<span><i class="ion-ios-cart"></i></span>
+	    							</a>
+	    							{% comment %} <a href="#" class="heart d-flex justify-content-center align-items-center ">
+	    								<span><i class="ion-ios-heart"></i></span>
+	    							</a> {% endcomment %}
+                      <a onclick="add_to_wishlist({{ product.id }})" class="heart d-flex justify-content-center align-items-center " style="cursor: pointer;">
+                                								<span><i class="ion-ios-heart"></i></span>
+                                                </a>
+    							</div>
+    						</div>
+    					</div>
+    				</div>
+    			</div>
+          {% endfor %}
+          {% else %}
+          <p>There is No Product Here!</p>
+          {% endif %}
+    		</div>
+    		<div class="row mt-5">
+          <div class="col text-center">
+            <div class="block-27">
+              <ul>
+
+                {% if products.has_previous %}
+                <li><a href="?page={{ products.previous_page_number }}">&lt;</a></li>
+                {% endif %}
+
+                {% for i in products.paginator.page_range %}
+                {% if products.number == i %}
+                <li class="active"><span>{{ i }}</span></li>
+                {% else %}
+                <li><a href="?page={{ i }}">{{ i }}</a></li>
+                {% endif %}
+                {% endfor %}
+
+                {% if products.has_next %}
+                <li><a href="?page={{ products.next_page_number }}">&gt;</a></li>
+                {% endif %}
+
+
+
+                {% comment %} <li><a href="#">&lt;</a></li>
+                <li class="active"><span>1</span></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#">&gt;</a></li> {% endcomment %}
+              </ul>
+            </div>
+          </div>
+        </div>
+    	</div>
+    </section>
+
+    <script>
+      function add_to_wishlist(id){
+        
+      $.ajax({
+        url: "{% url 'add-to-wishlist' %}",
+        type: "POST",
+        data: {
+          'csrfmiddlewaretoken': '{{ csrf_token }}',
+          'id': id,
+        },
+        success: function(response){
+          if(response.status == 'success'){
+            console.log(response.message);
+            showNotification('Product Added to Wishlist', 'green');
+          }
+          else{
+            console.log(response.message);
+            showNotification('Product Already in Wishlist', 'red');
+          }
+        }
+      });
+      }
+
+
+
+    </script>
+{% endblock %}

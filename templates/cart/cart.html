@@ -1,0 +1,205 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="hero-wrap hero-bread" style="background-image: url({% static 'images/bg_1.jpg' %});">
+      <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+          <div class="col-md-9 ftco-animate text-center">
+          	<p class="breadcrumbs"><span class="mr-2"><a href="{% url 'home' %}">Home</a></span> <span>Cart</span></p>
+            <h1 class="mb-0 bread">My Cart</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section class="ftco-section ftco-cart">
+			<div class="container">
+				<div class="row">
+    			<div class="col-md-12 ftco-animate">
+    				<div class="cart-list">
+	    				<table class="table">
+						    <thead class="thead-primary">
+						      <tr class="text-center">
+						        <th>&nbsp;</th>
+						        <th>&nbsp;</th>
+						        <th>Product name</th>
+						        <th>Price</th>
+						        <th>Quantity</th>
+						        <th>Total</th>
+						      </tr>
+						    </thead>
+						    <tbody>
+						      {% comment %} <tr class="text-center">
+						        <td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
+
+						        <td class="image-prod"><div class="img" style="background-image:url({% static 'images/product-3.jpg' %});"></div></td>
+
+						        <td class="product-name">
+						        	<h3>Bell Pepper</h3>
+						        	<p>Far far away, behind the word mountains, far from the countries</p>
+						        </td>
+
+						        <td class="price">$4.90</td>
+
+						        <td class="quantity">
+						        	<div class="input-group mb-3">
+					             	<input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
+					          	</div>
+					          </td>
+
+						        <td class="total">$4.90</td>
+						      </tr> {% endcomment %}
+							  
+
+
+
+						      {% comment %} <tr class="text-center">
+						        <td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
+
+						        <td class="image-prod"><div class="img" style="background-image:url({% static 'images/product-4.jpg' %});"></div></td>
+
+						        <td class="product-name">
+						        	<h3>Bell Pepper</h3>
+						        	<p>Far far away, behind the word mountains, far from the countries</p>
+						        </td>
+
+						        <td class="price">$15.70</td>
+
+						        <td class="quantity">
+						        	<div class="input-group mb-3">
+					             	<input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
+					          	</div>
+					          </td>
+
+						        <td class="total">$15.70</td>
+						      </tr> {% endcomment %}
+
+							  {% for item in cart_product %}
+							  	
+							  	<tr class="text-center">
+						        {% comment %} <td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td> {% endcomment %}
+								<td class="product-remove"><a href="javascript:void(0)" onclick="removeItem({{ item.product.id }})"><span class="ion-ios-close"></span></a></td>
+						        <td class="image-prod"><div class="img" style="background-image:url({{ item.product.photo.url }});"></div></td>
+
+						        <td class="product-name">
+						        	<h3>{{ item.product.name }}</h3>
+						        	<p>{{ item.product.description }}</p>
+						        </td>
+
+						        <td class="price">₹ {{ item.product.price }}</td>
+
+						        <td class="quantity">
+						        	<div class="input-group mb-3">
+					             	<input type="text" name="quantity" class="quantity form-control input-number" value="{{ item.quantity }}" min="1" max="100" readonly>
+					          	</div>
+					          </td>
+
+						        <td class="total">₹ {{ item.total_price }}</td>
+						      </tr>
+							  {% endfor %}
+
+							  {% if not cart_product %}
+							  <td colspan="5" class="text-center">No products in Cart</td>
+																{% endif %}
+
+						    </tbody>
+						  </table>
+					  </div>
+    			</div>
+    		</div>
+
+    			<div class="col-lg-4 mt-5 cart-wrap ftco-animate">
+    				<div class="cart-total mb-3">
+    					<h3>Cart Totals</h3>
+    					<p class="d-flex">
+    						<span>Subtotal</span>
+    						<span>₹ {{total_price}}</span>
+    					</p>
+    					<p class="d-flex">
+    						<span>Delivery</span>
+    						<span>₹ 0.00</span>
+    					</p>
+    					<p class="d-flex">
+    						<span>Discount</span>
+    						<span>₹ {{discount}}</span>
+    					</p>
+    					<hr>
+    					<p class="d-flex total-price">
+    						<span>Total</span>
+    						<span>₹ {{total_price}}</span>
+    					</p>
+    				</div>
+    				<p><a onclick="checkout_redirect()" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>
+    			</div>
+    		</div>
+			</div>
+		</section>
+
+
+    <script>
+  		$(document).ready(function(){
+
+  		var quantitiy=0;
+  		   $('.quantity-right-plus').click(function(e){
+
+  		        // Stop acting like a button
+  		        e.preventDefault();
+  		        // Get the field name
+  		        var quantity = parseInt($('#quantity').val());
+
+  		        // If is not undefined
+
+  		            $('#quantity').val(quantity + 1);
+
+
+  		            // Increment
+
+  		    });
+
+  		     $('.quantity-left-minus').click(function(e){
+  		        // Stop acting like a button
+  		        e.preventDefault();
+  		        // Get the field name
+  		        var quantity = parseInt($('#quantity').val());
+
+  		        // If is not undefined
+
+  		            // Increment
+  		            if(quantity>0){
+  		            $('#quantity').val(quantity - 1);
+  		            }
+  		    });
+
+  		});
+		function removeItem(id){
+			$.ajax({
+				url: "{% url 'remove_item' %}",
+				type: "POST",
+				data: {
+					'csrfmiddlewaretoken': '{{ csrf_token }}',
+					'id': id,
+				},
+				success: function(response){
+					location.reload();
+					showNotification("Item removed from cart!",'green');
+				}
+			});
+		}
+
+		function checkout_redirect(){
+
+			if({{total_price}} == 0){
+				//alert("Please add some items to cart");
+				showNotification("Please add some items to Cart!",'red');
+			}
+			else{
+				window.location.href = "{% url 'checkout' %}";
+			}
+		}
+		
+		
+	
+
+  	</script>
+{% endblock %}

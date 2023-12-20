@@ -1,0 +1,61 @@
+{% extends 'base/base.html' %}
+{% include 'base/header.html' %}
+{% load static %}
+
+{% block content %}
+
+    <section class="ftco-section contact-section bg-light">
+      <div class="container">
+        <div class="row block-9">
+          <div class="col-md-6 order-md-last d-flex">
+            <form class="bg-white p-5 contact-form" action="{% url 'signup' %}" method="post">
+              {% csrf_token %} {% for field in form %}
+              <div class="form-group">
+                {% if field.name != 'username' %} 
+                  {{ field.label_tag }} 
+                  {% endif %}
+                  
+                  <div>
+                    {{ field }}
+
+                    </div>
+                    {% comment %} error block here {% endcomment %}
+                    {% for error in field.errors %}
+                    <div class="alert alert-danger" role="alert">
+                      {{ error }}
+                      </div>
+                      {% endfor %}
+
+              </div>
+              {% endfor %}
+
+              
+
+
+
+              <div class="form-group">
+                Already have an account? Sign in <a href="{% url 'signin' %}">here</a>.
+                <input type="submit" value="Register" class="btn btn-primary py-3 px-5">
+              </div> 
+              
+            </form>
+          </div>
+          {% comment %} <div class="col-md-6 d-flex" style="background-image: url({% static 'images/6310507.jpg' %});" class="img-fluid" alt="Colorlib Template">
+          </div> {% endcomment %}
+          <div class="col-lg-6 mb-5 ftco-animate">
+    				<a class="image-popup"><img src="{% static 'images/6310507.jpg' %}"  alt="Colorlib Template" style="
+              height: 109%;     max-width: 100%;
+          "></a>
+    			</div>
+        </div>
+      </div>
+    </section>
+    <script>
+
+      function on_trigger(){
+        var email = $("#id_email").val();
+        $("#id_username").val(email);
+      }
+
+    </script>
+{% endblock %} 
