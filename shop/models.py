@@ -46,5 +46,5 @@ class Order(models.Model):
     payment_method = models.CharField(max_length=100)
     payment_signature = models.CharField(max_length=100)
     payment_order_id = models.CharField(max_length=100)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
     # updated_at = models.DateTimeField(auto_now=True)
