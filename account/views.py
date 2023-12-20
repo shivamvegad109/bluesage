@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
@@ -7,13 +8,16 @@ from .forms import MyUserCreationForm
 from django.contrib import messages
 
 
-try:
-    User.objects.get(username='admin')
-except User.DoesNotExist:
-    User.objects.create_superuser('admin', 'admin@admin.com', 'admin123')
-    print('Superuser created successfully.')
-else:
-    print('Superuser already exists.')
+def create_super_user(request):
+    try:
+        User.objects.get(username='admin')
+    except User.DoesNotExist:
+        User.objects.create_superuser('admin', 'admin@admin.com', 'admin123')
+        print('Superuser created successfully.')
+    else:
+        print('Superuser already exists.')
+    return JsonResponse({"status": "ok"})
+
 
 def signup(request):
     all_category = Category.objects.all()
