@@ -387,7 +387,8 @@ mark,
 
 .img-fluid {
   max-width: 100%;
-  height: auto; }
+  height: 240px;
+  text-align: center; }
 
 .img-thumbnail {
   padding: 0.25rem;
@@ -890,7 +891,8 @@ pre {
     -webkit-box-flex: 0;
     -ms-flex: 0 0 50%;
     flex: 0 0 50%;
-    max-width: 50%; }
+    max-width: 50%;
+    text-align: center; }
   .col-md-7 {
     -webkit-box-flex: 0;
     -ms-flex: 0 0 58.33333%;

@@ -5,7 +5,9 @@ from contact.forms import SubscriberForm
 
 def home_page(request):
     products = Product.objects.all()[:8]
-    category = Category.objects.all()
+    category1 = Category.objects.all()[:2]
+    category2 = Category.objects.all()[2:4]
+    category= Category.objects.all()
     forms = SubscriberForm()
     if request.method == 'POST':
         forms = SubscriberForm(request.POST)
@@ -14,6 +16,8 @@ def home_page(request):
     context = {
         'products': products,
         'forms': forms,
+        'categories1': category1,
+        "categories2": category2,
         'categories': category,
         'cart': len(request.session.get('cart', {}).keys())
     }
