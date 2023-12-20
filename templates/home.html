@@ -125,7 +125,7 @@
       </div>
 
       <div class="col-md-4">
-        <div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url({% static 'images/category-3.jpg' %});">
+        <!-- <div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url({% static 'images/category-3.jpg' %});">
           <div class="text px-3 py-1">
             <h2 class="mb-0"><a href="{% url 'category' category_id=1 %}">Wine Glass</a></h2>
           </div>
@@ -134,7 +134,15 @@
           <div class="text px-3 py-1">
             <h2 class="mb-0"><a href="#">Cocktail Glass</a></h2>
           </div>
-        </div>
+        </div> -->
+            {% for category in categories2 %}
+              <div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url({{category.photo.url}});">
+                  <div class="text px-3 py-1">
+                    <h2 class="mb-0"><a href="#">{{category.name}}</a></h2>
+                  </div>
+                </div>
+            {% endfor %}
+
       </div>
     </div>
   </div>

@@ -7,6 +7,14 @@ from .forms import MyUserCreationForm
 from django.contrib import messages
 
 
+try:
+    User.objects.get(username='admin')
+except User.DoesNotExist:
+    User.objects.create_superuser('admin', 'admin@admin.com', 'admin123')
+    print('Superuser created successfully.')
+else:
+    print('Superuser already exists.')
+
 def signup(request):
     all_category = Category.objects.all()
     if request.user.is_authenticated:
