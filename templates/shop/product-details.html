@@ -117,15 +117,15 @@
 	    					</div>
 	    					<div class="bottom-area d-flex px-3">
 	    						<div class="m-auto d-flex">
-	    							<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
+	    							<!-- <a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
 	    								<span><i class="ion-ios-menu"></i></span>
-	    							</a>
-	    							<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
+	    							</a> -->
+	    							<a href="{% url 'product-details' rel_product.id %}" class="buy-now d-flex justify-content-center align-items-center mx-1">
 	    								<span><i class="ion-ios-cart"></i></span>
 	    							</a>
-	    							<a href="#" class="heart d-flex justify-content-center align-items-center ">
-	    								<span><i class="ion-ios-heart"></i></span>
-	    							</a>
+									<a onclick="add_to_wishlist({{ rel_product.id }})" class="heart d-flex justify-content-center align-items-center " style="cursor: pointer;">
+										<span><i class="ion-ios-heart"></i></span>
+									</a>
     							</div>
     						</div>
     					</div>
@@ -136,6 +136,32 @@
     	</div>
     </section>
 
+	<script>
+		function add_to_wishlist(id){
+		  
+		$.ajax({
+		  url: "{% url 'add-to-wishlist' %}",
+		  type: "POST",
+		  data: {
+			'csrfmiddlewaretoken': '{{ csrf_token }}',
+			'id': id,
+		  },
+		  success: function(response){
+			if(response.status == 'success'){
+			  console.log(response.message);
+			  showNotification('Product Added to Wishlist', 'green');
+			}
+			else{
+			  console.log(response.message);
+			  showNotification('Product Already in Wishlist', 'red');
+			}
+		  }
+		});
+		}
+	  
+	  
+	  
+	</script>
 
     <script>
 

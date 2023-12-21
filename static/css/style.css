@@ -8013,7 +8013,8 @@ a {
   -webkit-transition: .3s all ease;
   -o-transition: .3s all ease;
   transition: .3s all ease;
-  color: #82ae46; }
+  color: #82ae46; 
+  text-align: center;}
   a:hover, a:focus {
     text-decoration: none;
     color: #82ae46; }

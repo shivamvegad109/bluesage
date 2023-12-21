@@ -116,7 +116,7 @@
             {% for category in categories1 %}
               <div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url({{category.photo.url}});">
                 <div class="text px-3 py-1">
-                  <h2 class="mb-0"><a href="#">{{category.name}}</a></h2>
+                  <h2 class="mb-0"><a href="{% url 'category' category_id=category.id %}">{{category.name}}</a></h2>
                 </div>
               </div>
             {% endfor %}
@@ -138,7 +138,7 @@
             {% for category in categories2 %}
               <div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url({{category.photo.url}});">
                   <div class="text px-3 py-1">
-                    <h2 class="mb-0"><a href="#">{{category.name}}</a></h2>
+                    <h2 class="mb-0"><a href="{% url 'category' category_id=category.id %}">{{category.name}}</a></h2>
                   </div>
                 </div>
             {% endfor %}
@@ -179,10 +179,10 @@
                 <!-- <a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
                   <span><i class="ion-ios-menu"></i></span>
                 </a> -->
-                <a href="{% url 'cart' %}" class="buy-now d-flex justify-content-center align-items-center mx-1">
+                <a href="{% url 'product-details' product.id %}" class="buy-now d-flex justify-content-center align-items-center mx-1">
                   <span><i class="ion-ios-cart"></i></span>
                 </a>
-                <a href="#" class="heart d-flex justify-content-center align-items-center ">
+                <a onclick="add_to_wishlist({{ product.id }})" class="heart d-flex justify-content-center align-items-center " style="cursor: pointer;">
                   <span><i class="ion-ios-heart"></i></span>
                 </a>
               </div>
@@ -217,6 +217,29 @@
     </div>
   </div>
 </section>
+
+<script>
+  function add_to_wishlist(id){
+  $.ajax({
+    url: "{% url 'add-to-wishlist' %}",
+    type: "POST",
+    data: {
+      'csrfmiddlewaretoken': '{{ csrf_token }}',
+      'id': id,
+    },
+    success: function(response){
+      if(response.status == 'success'){
+        console.log(response.message);
+        showNotification('Product Added to Wishlist', 'green');
+      }
+      else{
+        console.log(response.message);
+        showNotification('Product Already in Wishlist', 'red');
+      }
+    }
+  });
+  }
+</script>
 
 {% comment %} <section class="ftco-section testimony-section">
   <div class="container">
